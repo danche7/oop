@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 class Complex
@@ -20,6 +21,11 @@ class Complex
     {
         this->a = a;
         this->b = 0;
+    }
+    Complex(const Complex& y)
+    {
+        a = y.a;
+        b = y.b;
     }
     
     void print()
@@ -75,13 +81,100 @@ class Complex
         Complex rez((a*y.a + b*y.b)/(y.a*y.a + y.b*y.b), (b*y.a - a*y.b)/(y.a*y.a + y.b*y.b));
         return rez;
     }
+    
+    Complex& operator=(Complex orig)
+    {
+        this->a = orig.a;
+        this->b = orig.b;
+        
+        return *this;
+    }
+    
+    bool operator==(Complex y)
+    {
+        if(a==y.a and b==y.b)
+        return true;
+        
+        return false;
+    }
+    
+    bool operator!=(Complex y)
+    {
+        if(a!=y.a)
+        return true;
+        
+        if(b!=y.b)
+        return true;
+        
+        return false;
+    }
+    
+    float operator!()
+    {
+        // modul
+        
+        float m = sqrt(a*a+b*b);
+        return m;
+    }
+    
+    Complex& operator++()
+    {
+        //prefix
+        a++;
+        return *this;
+    }
+    
+    Complex& operator++(int)
+    {
+        //postfix
+        a++;
+        return *this;
+    }
+    
+    Complex& operator--()
+    {
+        //prefix
+        a--;
+        return *this;
+    }
+    
+    Complex& operator--(int)
+    {
+        //postfix
+        a--;
+        return *this;
+    }
+    
+    float get_a()
+    {
+        return a;
+    }
+    
+    float get_b()
+    {
+        return b;
+    }
+    
 };
+
+Complex operator+(Complex x, float k)
+{
+    Complex r(x.get_a() + k, x.get_b());
+    return r;
+}
+
+Complex operator+(float k, Complex x)
+{
+    Complex r(x.get_a() + k, x.get_b());
+    return r;
+}
 
 int main()
 {
     Complex x(1,4);
     x.print();
-
+    Complex l(x);
+    
     x = -x;
     x.print();
     Complex y(45,3);
@@ -101,9 +194,50 @@ int main()
     d=~d;
     d.print();
     
-    Complex f(100,10), g(500,50);
+    Complex f(100,10), g(509,50);
     
     d = g/f;
     
     d.print();
+    
+    d=x;
+    d.print();
+    
+    if(d==x)
+    cout << true << "\n";
+    
+    if(d==y)
+    cout << true;
+    
+    if(d!=y)
+    cout << "da" << '\n';
+    
+    if(d!=x)
+    cout << "lele";
+    
+    cout << !d << '\n';
+    l.print();
+    
+    cout << '\n';
+    
+    x.print();
+    x=++x;
+    x.print();
+    
+    x=x++;
+    x.print();
+    
+    x.print();
+    x=--x;
+    x.print();
+    
+    x=x--;
+    x.print();
+   
+    d = x+5.3;
+    d.print();
+    
+    d=5+x;
+    d.print();
+    
 }
